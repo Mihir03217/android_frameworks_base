@@ -21,6 +21,7 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.os.StrictMode.vmIncorrectContextUseEnabled;
 import static android.permission.flags.Flags.shouldRegisterAttributionSource;
 import static android.view.WindowManager.LayoutParams.WindowType;
+import static com.android.internal.app.ContentProviderRedirector.translateContentProviderAuthority;
 import static com.android.internal.gmscompat.GmcDebug.maybeLogSendBroadcast;
 import static com.android.internal.gmscompat.GmcDebug.maybeLogStartService;
 
@@ -4159,6 +4160,7 @@ class ContextImpl extends Context {
         @Override
         @UnsupportedAppUsage
         protected IContentProvider acquireProvider(Context context, String auth) {
+            auth = translateContentProviderAuthority(auth);
             return mMainThread.acquireProvider(context,
                     ContentProvider.getAuthorityWithoutUserId(auth),
                     resolveUserIdFromAuthority(auth), true);
@@ -4166,6 +4168,7 @@ class ContextImpl extends Context {
 
         @Override
         protected IContentProvider acquireExistingProvider(Context context, String auth) {
+            auth = translateContentProviderAuthority(auth);
             return mMainThread.acquireExistingProvider(context,
                     ContentProvider.getAuthorityWithoutUserId(auth),
                     resolveUserIdFromAuthority(auth), true);
@@ -4178,6 +4181,7 @@ class ContextImpl extends Context {
 
         @Override
         protected IContentProvider acquireUnstableProvider(Context c, String auth) {
+            auth = translateContentProviderAuthority(auth);
             return mMainThread.acquireProvider(c,
                     ContentProvider.getAuthorityWithoutUserId(auth),
                     resolveUserIdFromAuthority(auth), false);
