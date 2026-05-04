@@ -92,7 +92,7 @@ public class PackageManagerHooks {
 
         int[] flagsArr = new int[AppBindArgs.FLAGS_ARRAY_LEN];
         flagsArr[AppBindArgs.FLAGS_IDX_SPECIAL_RUNTIME_PERMISSIONS] =
-                SpecialRuntimePermUtils.getFlags(pm, pkg, pkgState, userId);
+                SpecialRuntimePermUtils.getFlags(pkg, pkgState, userId);
 
         var b = new Bundle();
         b.putParcelable(AppBindArgs.KEY_GOS_PACKAGE_STATE, gosPs);
